@@ -83,6 +83,53 @@ public:
                 << endl;
         }
     }
+private:
+    int findIndex(AccessMode mode) const {
+        if (data.empty()) {
+            return -1;
+        }
 
-    return 0;
-}
+        int bestIndex = 0;
+
+        for (int i = 1; i < data.size(); i++) {
+            switch (mode) {
+            case AccessMode::Highest:
+                if (data[i].priority > data[bestIndex].priority) {
+                    bestIndex = i;
+                }
+                else if (data[i].priority == data[bestIndex].priority &&
+                    data[i].order < data[bestIndex].order) {
+                    bestIndex = i;
+                }
+                break;
+
+            case AccessMode::Lowest:
+                if (data[i].priority < data[bestIndex].priority) {
+                    bestIndex = i;
+                }
+                else if (data[i].priority == data[bestIndex].priority &&
+                    data[i].order < data[bestIndex].order) {
+                    bestIndex = i;
+                }
+                break;
+
+            case AccessMode::Oldest:
+                if (data[i].order < data[bestIndex].order) {
+                    bestIndex = i;
+                }
+                break;
+
+            case AccessMode::Newest:
+                if (data[i].order > data[bestIndex].order) {
+                    bestIndex = i;
+                }
+                break;
+            }
+        }
+
+        return bestIndex;
+    }
+};
+
+
+   
